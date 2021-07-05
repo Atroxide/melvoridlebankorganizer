@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Import your Melvor Idle save and reorganize your bank!">
+    <meta name="author" content="Atroxide">
+    <title>Melvor Idle Bank Organizer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="pako.min.js"></script>
+    <script src="main.js"></script>
+    <script src="data/melvordata.min.js"></script>
+</head>
+
+<body class="text-center">
+    <div class="jumbotron">
+        <div class="alert alert-danger" role="alert">
+            Melvor Idle Bank Organizer is in an EARLY EARLY EARLY pre-alpha state. Please back up all saves
+        </div>
+        <h1 class="display-4">Melvor Idle Bank Organizer</h1>
+        <p class="lead">Import your Melvor Idle save and reorganize your bank. <a href="http://melvoridle.com/" target="_blank">http://melvoridle.com/</a></p>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col-1">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-link">Import</a>
+                </div>
+            </div>
+            <div class="col-5">
+                <textarea class="form-control" id="txtImport" rows="2"></textarea>
+            </div>
+            <div class="col-1">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <input type="submit" id="btnExport" value="Export" disabled>
+                </div>
+            </div>
+            <div class="col-5">
+                <textarea class="form-control" id="txtExport" rows="2" disabled></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 1</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-0"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 2</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 3</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 4</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 5</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 6</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-5"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 7</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 8</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-7"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 9</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-8"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Tab 10</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab-9"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 tab-tag">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a class="nav-lin">Undefined</a>
+                </div>
+            </div>
+            <div class="col-11 banktab" id="tab--1"></div>
+        </div>
+    </div>
+</body>
+
+</html>

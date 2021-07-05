@@ -1,0 +1,55 @@
+body {
+    color: #FFFFFF;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #232a35!important;
+}
+
+.jumbotron {
+    background-color: #232a35!important;
+}
+
+.jumbotron .row {
+    margin-bottom: 20px;
+}
+
+.banktab {
+    background: #232a35!important;
+}
+
+.item {
+    float: left;
+    cursor: pointer;
+    background: #2d3542;
+    position: relative;
+    height: 64px;
+    width: 64px;
+    border-radius: 5px;
+    margin: .5rem!important;
+}
+
+.item.hasborder {
+    background-image: url(https://cdn.melvor.net/core/v018/assets/media/main/bank_border.png?2)!important;
+    background-size: contain;
+    background-color: transparent!important;
+}
+
+.item img {
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+    padding: 1rem!important;
+    vertical-align: middle;
+    border-style: none;
+}
+
+.tab-tag {
+    background-color: #373e49!important;
+}
+
+.item div {
+    position: absolute;
+    bottom: -10px;
+    width: 100%;
+}
