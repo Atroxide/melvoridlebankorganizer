@@ -7,6 +7,8 @@ $(() => {
     var saveData;
     var itemMap;
     var hasBorders;
+    var lastToolTip;
+
 
     $importField.keyup(function() {
 
@@ -17,6 +19,7 @@ $(() => {
         try {
 
             saveData = loadSaveData($importField.val())
+            console.log(saveData);
             hasBorders = !saveData.SETTINGS.bank.bankBorder;
 
             itemMap = getItemMap(saveData);
@@ -25,19 +28,54 @@ $(() => {
 
             var bank = saveData.bank;
             bank.forEach((item, index) => {
-                console.log("#bank-item-qty-" + item.id);
                 $("#bank-item-qty-" + item.id).html(item.qty);
             });
 
+            tippy('.item', {
+                content: 'Loading...',
+                allowHTML: true,
+                interactive: true,
+                appendTo: "parent",
+                onCreate: function(instance) {
 
+                    itemID = $(instance.reference).attr('id').substring(5);
+                    itemName = melvorData['items'][itemID].name;
+                    itemCategory = melvorData['items'][itemID].category;
+                    wikiLink = 'https://wiki.melvoridle.com/index.php?title=' + itemName.replace('#', '');
+
+                    tooltip = '<a href="' + wikiLink + '" target="_new">' + itemName + '</a><br /><small class="badge-pill">' + itemCategory + '</small>';
+                    instance.setContent(tooltip);
+                },
+                onShow: function(instance) {
+                    lastTooltip = instance;
+                },
+            });
 
 
             $(".banktab").sortable({
+                items: ".item",
                 connectWith: ".banktab",
+                start: function(event, ui) {
+                    lastTooltip.disable();
+                },
+                stop: function(event, ui) {
+                    lastTooltip.enable();
+                },
+                deactivate: function(event, ui) {
+                    var tab = $(ui.item).parent().attr('id').substring(4);
+                    reorderTab(tab);
+                },
                 receive: function(event, ui) {
                     var toTab = $(this).attr('id').substring(4);
                     var item = $(ui.item).attr('id').substring(5);
                     itemMap.set(parseInt(item), parseInt(toTab));
+                    reorderTab(toTab);
+                    if (parseInt(item) < 0) {
+                        console.log(this);
+                        console.log(ui);
+                        alert("ERROR: Corruption occured. Please report this glitch to TexasMd91@gmail.com. Do not export.");
+                    }
+
                 }
             }).disableSelection();
 
@@ -70,6 +108,13 @@ $(() => {
             var newDefaultItemTab = [];
             itemMap.forEach((tab, itemID) => {
                 if (tab != -1) {
+                    if (itemID < 0) {
+
+                        console.log(itemMap);
+                        console.log(tab);
+                        console.log(itemID);
+                        alert("ERROR: Corruption occured. Please report this glitch to TexasMd91@gmail.com. Do not export.");
+                    }
                     newDefaultItemTab.push({
                         "itemID": itemID,
                         "tab": tab
@@ -101,12 +146,23 @@ $(() => {
             itemMap.set(id, -1)
         });
 
-        console.log(saveData.SETTINGS.bank.defaultItemTab);
         for (let item of saveData.SETTINGS.bank.defaultItemTab) {
             itemMap.set(item['itemID'], item['tab']);
         }
 
         return itemMap;
+    }
+
+    function reorderTab(tab) {
+        $('#tab-' + tab + ' > .item').sort(function(a, b) {
+            aId = parseInt($(a).attr('id').substring(5));
+            bId = parseInt($(b).attr('id').substring(5));
+            if (aId < bId) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }).appendTo('#tab-' + tab);
     }
 
     function populateFromItemMap(itemMap) {
@@ -122,7 +178,7 @@ $(() => {
         itemName = melvorData['items'][itemID]['name'];
         articleName = itemName.replace('#', '');
         return (
-            '<div class="item' + (hasBorders ? " hasborder" : "") + '" id="item-' + itemID + '"><img width="48px" height="48px" src="' +
+            '<div class="item' + (hasBorders ? " hasborder" : "") + '" id="item-' + itemID + '" aria-expanded="false"><img width="48px" height="48px" src="' +
             CDNPrefix + melvorData['items'][itemID]['media'] + '" /><div class="font-size-sm text-white text-center"><small class="badge-pill bg-secondary" id="bank-item-qty-' + itemID + '">0</small></div></div>'
         );
     }
